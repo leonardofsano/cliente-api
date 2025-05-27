@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../database'); // importa a conexão com o PostgreSQL
+const sequelize = require('../config/database'); // Ajuste conforme seu arquivo de conexão
 
 const Cliente = sequelize.define('Cliente', {
   codigo: {
@@ -49,8 +49,8 @@ const Cliente = sequelize.define('Cliente', {
     allowNull: true,
   },
 }, {
-  tableName: 'clientes',      // nome exato da tabela no PostgreSQL
-  timestamps: false,          // desativa os campos createdAt e updatedAt
+  tableName: 'clientes',
+  timestamps: false,
 });
 
 module.exports = Cliente;

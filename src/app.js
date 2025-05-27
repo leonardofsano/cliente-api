@@ -1,9 +1,11 @@
 const express = require('express');
 const app = express();
+const clientesRouter = require('./routes/clientes');
 
-const clienteRoutes = require('./routes/cliente.routes');
-
+// Middleware para parsear JSON
 app.use(express.json());
-app.use('/api', clienteRoutes);
+
+// Uso das rotas
+app.use('/clientes', clientesRouter);
 
 module.exports = app;
