@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Cliente = require('../models/cliente.model');
+const Cliente = require('../models/cliente.models');
 
 // Rota GET – Listar todos os clientes
 router.get('/', async (req, res) => {
@@ -15,13 +15,17 @@ router.get('/', async (req, res) => {
 
 // Rota POST – Criar novo cliente
 router.post('/', async (req, res) => {
+  console.log('> DEBUG: entrou no POST /clientes, body:', req.body);
+
   try {
     const novoCliente = await Cliente.create(req.body);
-    res.status(201).json(novoCliente);
+    return res.status(201).json(novoCliente);
   } catch (error) {
     console.error('Erro ao criar cliente:', error);
-    res.status(500).json({ erro: 'Erro ao criar cliente' });
+    return res.status(500).json({ erro: 'Erro ao criar cliente' });
   }
 });
 
+
 module.exports = router;
+console.log(__dirname, __filename)

@@ -14,5 +14,5 @@ API para gerenciar clientes com operações CRUD usando Node.js, Express e Postg
 
 1. Clone o repositório:
 ```bash
-git clone https://github.com/seunome/cliente-api.git
+git https://github.com/leonardofsano/cliente-api
 cd cliente-api
