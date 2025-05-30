@@ -1,3 +1,8 @@
+// src/models/cliente.models.js
+
+const sequelize = require('../config/database');
+const { DataTypes } = require('sequelize');
+
 const Cliente = sequelize.define('Cliente', {
   codigo: {
     type: DataTypes.INTEGER,
@@ -25,4 +30,5 @@ const Cliente = sequelize.define('Cliente', {
   tableName: 'clientes',
   timestamps: false
 });
-  
+
+module.exports = Cliente;

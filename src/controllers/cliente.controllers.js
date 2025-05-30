@@ -21,9 +21,9 @@ exports.createCliente = async (req, res) => {
 exports.getAllClientes = async (req, res) => {
   try {
     const filtros = {};
-    if (req.query.nome) filtros.nome = { [Op.iLike]: `%${req.query.nome}%` };
+    if (req.query.nome)   filtros.nome   = { [Op.iLike]: `%${req.query.nome}%` };
     if (req.query.cidade) filtros.cidade = { [Op.iLike]: `%${req.query.cidade}%` };
-    if (req.query.uf) filtros.uf = { [Op.iLike]: `%${req.query.uf}%` };
+    if (req.query.uf)      filtros.uf      = { [Op.iLike]: `%${req.query.uf}%` };
 
     const clientes = await Cliente.findAll({ where: filtros });
     res.status(200).json(clientes);
@@ -40,30 +40,23 @@ exports.getClienteById = async (req, res) => {
     res.status(200).json(cliente);
   } catch (err) {
     console.error('Erro ao buscar cliente:', err);
-    res.status(500).json({ error: 'Erro no servidor' });
+    res.status(500).json({ error: 'Erro ao buscar cliente' });
   }
 };
 
 exports.updateCliente = async (req, res) => {
   try {
-    const codigo = req.params.codigo;
-
-    const cliente = await Cliente.findByPk(codigo);
-    if (!cliente) return res.status(404).json({ error: 'Cliente não encontrado' });
-
-    const { error } = clienteSchema.validate(req.body, { presence: 'optional' });
+    const { error } = clienteSchema.validate(req.body);
     if (error) return res.status(400).json({ error: error.details[0].message });
 
-    if (req.body.cpf && req.body.cpf !== cliente.cpf) {
-      const cpfExistente = await Cliente.findOne({ where: { cpf: req.body.cpf } });
-      if (cpfExistente) return res.status(400).json({ error: 'CPF já cadastrado por outro cliente' });
-    }
+    const cliente = await Cliente.findByPk(req.params.codigo);
+    if (!cliente) return res.status(404).json({ error: 'Cliente não encontrado' });
 
     await cliente.update(req.body);
     res.status(200).json(cliente);
   } catch (err) {
     console.error('Erro ao atualizar cliente:', err);
-    res.status(500).json({ error: 'Erro no servidor' });
+    res.status(500).json({ error: 'Erro ao atualizar cliente' });
   }
 };
 
